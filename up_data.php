@@ -1,6 +1,6 @@
 <?php
 
-function upload_data($image_name,$size,$klasor){
+function upload_data($image_name,$size,$tip,$klasor){
 
 if($_FILES[$image_name]){
 	if(is_uploaded_file($_FILES[$image_name]['tmp_name'])){
@@ -16,7 +16,6 @@ if($_FILES[$image_name]){
 
 		$dosya_tipi = $_FILES[$image_name]['type'];
 		if (in_array($dosya_tipi, $gecerli_uzanti)) {
-	        
 	        $sizes = 1024 * 1024 * $size;
 	        if($sizes >= $_FILES[$image_name]['size']){
 	        	$yukle = move_uploaded_file($_FILES[$image_name]['tmp_name'],$klasor.'/'.$ad.'.'.$uzanti);
@@ -25,9 +24,17 @@ if($_FILES[$image_name]){
 	        	}else{
 	        		echo 'başarısız';
 	        	}
+	        }else{
+	        	echo 'Dosyanızın Boyutu '.$sizes.'mb boyutunu geçmemelidir';
 	        }
-		}
+	   }else{
+	   	echo 'Dosyanız jpg,png veya gif formatın olmalıdır';
+	   }
+	}else{
+		echo 'Dosyanız Yüklenemedi..';
 	}
+}else{
+	echo 'Bir Sorun Oluştu';
 }
 
 }
